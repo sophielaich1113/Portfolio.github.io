@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8">
+<meta name = "viewport" content  = "initial-scale = 1, maximum-scale=1, user-scalable=no">
+<title>Cart II: Adding a graphic to a view</title>
+<style>
+html, 
+body,
+#viewDiv {
+padding:0;
+margin: 0;
+height: 100%;
+width: 100%;
+}
+</style>
+<link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/dark/main.css">
+<script src="https://js.arcgis.com/4.33/"></script>
+<script>
+	require ([
+	"esri/Map",
+"esri/views/MapView",
+"esri/Graphic"
+], function(Map, MapView, Graphic){
+var mymap = new Map({
+basemap: "topo"
+});
+var myview = new MapView({
+container: "viewDiv",
+map: mymap, 
+zoom: 5,
+center: [-78.3949, 40.5184], 
+});
+
+var pt = {
+type: "point",
+longitude: -78.3949,
+latitude: 40.5184
+};
+
+var markerSymbol = {
+type: "simple-marker",
+color: [226,119,40],
+style: "circle",
+size: 12
+};
+
+var ptAtt = {
+Name: "Altoona Area High School",
+City: "Altoona",
+Country: "United States" 
+};
+
+var ptGraphic = new Graphic({
+geometry: pt,
+symbol: markerSymbol,
+attributes:ptAtt,
+popupTemplate: {
+title: "{Name}",
+content: [{
+type: "fields",
+fieldInfos: [{
+fieldName: "Name"
+},{
+fieldName: "City"
+},{
+fieldName: "Country"
+}]
+}]
+}
+});
+
+myview.graphics.add(ptGraphic);
+});
+</script>
+</head>
+<body>
+<div  id="viewDiv"></div>
+</body>
+</html>
