@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Cart II: 3D Map exercise</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.33/"></script>
+    <script>
+      require(["esri/Map", "esri/views/SceneView"], (Map, SceneView) => {
+        const map = new Map({
+          basemap: "hybrid",
+          ground: "world-elevation",
+        });
+        const view = new SceneView({
+          container: "viewDiv", 
+          map: map, 
+          camera: {
+            position: {
+              x: -82.1013889,
+              y: 39.3291667,
+              z: 1500
+            },
+            heading: 0,
+            tilt: 0.49
+          },
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

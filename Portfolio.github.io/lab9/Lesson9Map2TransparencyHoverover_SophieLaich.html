@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Transparency and hover over</title>
+
+<style>
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#viewDiv {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 100px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  color: black;
+  background-color: beige;
+  text-align: center;
+}
+
+.opacity-slider {
+  width: 85%;
+}
+
+.esri-feature {
+  letter-spacing: 0em;
+  line-height: 1.55rem;
+  background: #fff;
+  padding: 1em;
+}
+</style>
+
+<link rel="stylesheet" href="https://js.arcgis.com/4.34/esri/css/main.css">
+<script src="https://js.arcgis.com/4.34/"></script>
+
+<script>
+require([
+  "esri/Map",
+  "esri/views/MapView",
+  "esri/layers/FeatureLayer",
+  "esri/widgets/Feature",
+  "esri/Graphic",
+  "esri/core/promiseUtils",
+  "esri/layers/support/LabelClass",
+  "esri/widgets/LayerList"
+], function (Map, MapView, FeatureLayer, Feature, Graphic, promiseUtils,LabelClass,LayerList) {
+
+  const myMap = new Map({
+    basemap: "topo-vector"
+  });
+
+  const myView = new MapView({
+    container: "viewDiv",
+    map: myMap,
+    center: [-115.5, 45.2],
+    scale: 7000000
+  });
+
+  const counties = new FeatureLayer({
+    portalItem: { id: "5fb6ebf9392647ccb78447b9c11cbdde" },
+    title: "Counties"
+  });
+  myMap.add(counties);
+
+  const highways = new FeatureLayer({
+    url: "https://carto.nationalmap.gov/arcgis/rest/services/transportation/MapServer/8",
+    title: "Highways"
+  });
+  myMap.add(highways);
+
+  highways.when(function () {
+    const slider = document.querySelector(".opacity-slider");
+    const op = document.querySelector(".opacity");
+
+    slider.addEventListener("input", function () {
+      highways.opacity = slider.value;
+      op.innerText = slider.value;
+    });
+  });
+
+  const graphic = new Graphic({
+    attributes: {},
+    popupTemplate: {
+      content: "Mouse over features to show details..."
+    }
+  });
+
+  const featureWidget = new Feature({
+    graphic: graphic,
+    view: myView
+  });
+
+  myView.ui.add(featureWidget, "top-right");
+
+  myView.whenLayerView(counties).then((layerView) => {
+    let highlight;
+    let objectId;
+
+    const debouncedUpdate = promiseUtils.debounce(async (event) => {
+      const hitTest = await myView.hitTest(event, { include: counties });
+
+      const results = hitTest.results.filter((r) => r.graphic.layer.popupTemplate);
+
+      const result = results[0];
+      const newObjectId = result?.graphic.attributes[counties.objectIdField];
+
+      if (!newObjectId) {
+        highlight?.remove();
+        objectId = null;
+        featureWidget.graphic = graphic;
+      } else if (objectId !== newObjectId) {
+        highlight?.remove();
+        objectId = newObjectId;
+        featureWidget.graphic = result.graphic;
+        highlight = layerView.highlight(result.graphic);
+      }
+    });
+
+    myView.on("pointer-move", (event) => {
+      debouncedUpdate(event).catch((err) => {
+        if (!promiseUtils.isAbortError(err)) 
+		throw err;
+      });
+    });
+  });
+  
+  var countyLabels = new LabelClass({
+  labelExpressionInfo: {
+  expression:"$feature.NAME10"},
+  symbol:{
+	type:"text",
+	color:"black",
+	haloSize:1,
+	haloColor:"white"
+}
+});
+counties.labelingInfo = [countyLabels];
+
+const layerList = new LayerList({
+view: myView,
+listItemCreatedFunction: function(event){
+const item = event.item;
+if (item.layer.type !="group"){
+item.panel = {
+content: "legend",
+open: true
+};
+}
+}
+});
+myView.ui.add(layerList, {position: "top-left", index:2});
+});
+</script>
+</head>
+<body>
+<div id="viewDiv" class="esri-widget"></div>
+<div class="footer">
+  <h4>Highways Opacity = <span class="opacity">1</span></h4>
+  <input class="opacity-slider" type="range" min="0" max="1" step="0.001" value="1">
+</div>
+
+</body>
+</html>
