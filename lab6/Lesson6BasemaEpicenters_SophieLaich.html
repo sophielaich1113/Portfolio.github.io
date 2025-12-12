@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Customizing a basemap and adding a kml layer</title>
+  <style>
+    html, 
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.34/esri/themes/dark/main.css">
+  <script src="https://js.arcgis.com/4.34/"></script>
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/Basemap",
+      "esri/layers/VectorTileLayer",
+      "esri/layers/CSVLayer",
+      "esri/renderers/SimpleRenderer",
+      "esri/symbols/PictureMarkerSymbol"
+    ], function(Map, MapView, Basemap, VectorTileLayer, CSVLayer, SimpleRenderer, PictureMarkerSymbol) {
+
+      var myBaseMap = new Basemap({
+        baseLayers: [
+          new VectorTileLayer({
+            portalItem: {
+              id: "fd9ab491f34146129c761ca2172a8fa9"
+            }
+          })
+        ]
+      });
+
+      var myMap = new Map({
+        basemap: myBaseMap
+      });
+
+      var myView = new MapView({
+        container: "viewDiv",
+        map: myMap,
+        center: [-115.5, 39],
+        scale: 16000000
+      });
+
+      var usgsFeed = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv";
+
+      var quakeSym = new PictureMarkerSymbol({
+        url: "https://dl.dropboxusercontent.com/scl/fi/u4sced0ils1cymf5g4jn7/earthqkSmbl.png?rlkey=ymes02fhlwo8s4egad2znbvxw&st=2fjz33s7&dl=0",
+        width: "20px",
+        height: "20px"
+      });
+
+      var quakeRenderer = new SimpleRenderer({
+        symbol: quakeSym
+      });
+
+      var template = ({
+        title: "Earthquake Info",
+        content: "Magnitude{mag} {type} hit {place} on {time}"
+      });
+
+      var epicenters = new CSVLayer({
+        url: usgsFeed,
+        copyright: "USGS Earthquakes",
+        popupTemplate: template,
+        renderer: quakeRenderer
+      });
+
+      myMap.add(epicenters);
+
+    });
+  </script>
+</head>
+<body>
+  <div id="viewDiv"></div>
+</body>
+</html>
