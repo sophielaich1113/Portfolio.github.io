@@ -3,23 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <title>My Portfolio</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 36px;
+      color: #333;
+    }
+
+    .swiper {
+      width: 90%;
+      max-width: 800px;
+      padding: 40px 0;
+      margin: 40px auto;
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      height: 150px;
+      background: #ffffff;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .swiper-slide:hover {
+      transform: scale(1.05);
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+      width: 100%;
+      display: block;
+      height: 100%;
+      line-height: 150px;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #333;
+    }
+
+    .swiper-pagination-bullet {
+      background: #333;
+    }
+  </style>
 </head>
 <body>
+
   <h1>My Portfolio</h1>
-  <p>Click a lab to open it:</p>
-  <ul>
-    <li><a href="lab1/index.html">Lab 1</a></li>
-    <li><a href="lab2/index.html">Lab 2</a></li>
-    <li><a href="lab3/index.html">Lab 3</a></li>
-    <li><a href="lab3.5/index.html">Lab 3.5</a></li>
-    <li><a href="lab4/index.html">Lab 4</a></li>
-    <li><a href="lab5/index.html">Lab 5</a></li>
-    <li><a href="lab6/index.html">Lab 6</a></li>
-    <li><a href="lab7/index.html">Lab 7</a></li>
-    <li><a href="lab8/index.html">Lab 8</a></li>
-    <li><a href="lab9/index.html">Lab 9</a></li>
-    <li><a href="lab10/index.html">Lab 10</a></li>
-    <li><a href="finalmap/index.html">Final Project</a></li>
-  </ul>
+
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><a href="lab1/index.html">Lab 1</a></div>
+      <div class="swiper-slide"><a href="lab2/index.html">Lab 2</a></div>
+      <div class="swiper-slide"><a href="lab3/index.html">Lab 3</a></div>
+      <div class="swiper-slide"><a href="lab3.5/index.html">Lab 3.5</a></div>
+      <div class="swiper-slide"><a href="lab4/index.html">Lab 4</a></div>
+      <div class="swiper-slide"><a href="lab5/index.html">Lab 5</a></div>
+      <div class="swiper-slide"><a href="lab6/index.html">Lab 6</a></div>
+      <div class="swiper-slide"><a href="lab7/index.html">Lab 7</a></div>
+      <div class="swiper-slide"><a href="lab8/index.html">Lab 8</a></div>
+      <div class="swiper-slide"><a href="lab9/index.html">Lab 9</a></div>
+      <div class="swiper-slide"><a href="lab10/index.html">Lab 10</a></div>
+      <div class="swiper-slide"><a href="final/index.html">Final Project</a></div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper('.swiper', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      }
+    });
+  </script>
+
 </body>
 </html>
