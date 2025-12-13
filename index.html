@@ -2,48 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Portfolio</title>
+  <title>Sophie Laich Portfolio</title>
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background: #f5f5f5;
-      margin: 0;
       text-align: center;
     }
 
     h1 {
-      margin: 30px 0;
+      margin: 20px 0;
     }
 
     .swiper {
-      width: 90%;
-      max-width: 900px;
+      width: 95vw;
+      height: 80vh;
       margin: auto;
     }
 
+    /* Slide layout */
     .swiper-slide {
       background: white;
-      border-radius: 12px;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       overflow: hidden;
     }
 
+    /* Image styling */
     .swiper-slide img {
       width: 100%;
-      height: 300px;
-      object-fit: cover;
+      max-height: 70vh;
+      object-fit: contain;
       display: block;
     }
 
+    /* Caption */
     .caption {
       padding: 15px;
+      font-size: 18px;
       font-weight: bold;
     }
 
     a {
-      color: black;
       text-decoration: none;
+      color: black;
     }
   </style>
 </head>
@@ -57,84 +65,84 @@
 
     <div class="swiper-slide">
       <a href="lab1/index.html">
-        <img src="Images/lab1.png">
+        <img src="images/lab1.png" alt="Lab 1">
         <div class="caption">Lab 1</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab2/index.html">
-        <img src="Images/lab2.png">
+        <img src="images/lab2.png" alt="Lab 2">
         <div class="caption">Lab 2</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab3/index.html">
-        <img src="Images/lab3.png">
+        <img src="images/lab3.png" alt="Lab 3">
         <div class="caption">Lab 3</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab3.5/index.html">
-        <img src="Images/lab3.5.png">
+        <img src="images/lab3.5.png" alt="Lab 3.5">
         <div class="caption">Lab 3.5</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab4/index.html">
-        <img src="Images/lab4.png">
+        <img src="images/lab4.png" alt="Lab 4">
         <div class="caption">Lab 4</div>
       </a>
     </div>
 
     <div class="swiper-slide">
-      <a href="lab5/Index.html">
-        <img src="Images/lab5.png">
+      <a href="lab5/index.html">
+        <img src="images/lab5.png" alt="Lab 5">
         <div class="caption">Lab 5</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab6/index.html">
-        <img src="Images/lab6.png">
+        <img src="images/lab6.png" alt="Lab 6">
         <div class="caption">Lab 6</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab7/index.html">
-        <img src="Images/lab7.png">
+        <img src="images/lab7.png" alt="Lab 7">
         <div class="caption">Lab 7</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab8/index.html">
-        <img src="Images/lab8.png">
+        <img src="images/lab8.png" alt="Lab 8">
         <div class="caption">Lab 8</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab9/index.html">
-        <img src="Images/lab9.png">
+        <img src="images/lab9.png" alt="Lab 9">
         <div class="caption">Lab 9</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="lab10/index.html">
-        <img src="Images/lab10.png">
+        <img src="images/lab10.png" alt="Lab 10">
         <div class="caption">Lab 10</div>
       </a>
     </div>
 
     <div class="swiper-slide">
       <a href="finalmap/index.html">
-        <img src="Images/finalmap.png">
+        <img src="images/finalmap.png" alt="Final Project">
         <div class="caption">Final Project</div>
       </a>
     </div>
@@ -150,15 +158,16 @@
 <script>
   new Swiper('.swiper', {
     loop: true,
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    }
   });
 </script>
 
 </body>
 </html>
-
-
-
-
-
